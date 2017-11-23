@@ -6,6 +6,9 @@
  Функция должна принимать один аргумент и возвращать его
  */
 function returnFirstArgument(arg) {
+    'use strict';
+
+    return arg;
 }
 
 /*
@@ -15,6 +18,11 @@ function returnFirstArgument(arg) {
  Значение по умолчанию второго аргумента должно быть 100
  */
 function defaultParameterValue(a, b) {
+    'use strict';
+
+    b = b || 100;
+
+    return a + b;
 }
 
 /*
@@ -24,6 +32,17 @@ function defaultParameterValue(a, b) {
  Количество переданных аргументов заранее неизвестно
  */
 function returnArgumentsArray() {
+    'use strict';
+
+    let arr = [],
+        l = arguments.length;
+
+    for (let i = 0; i < l; i++) {
+        // arr[i] = arguments[i];
+        arr.push(arguments[i]);
+    }
+
+    return arr;
 }
 
 /*
@@ -32,6 +51,9 @@ function returnArgumentsArray() {
  Функция должна принимать другую функцию и возвращать результат вызова переданной функции
  */
 function returnFnResult(fn) {
+    'use strict';
+
+    return fn();
 }
 
 /*
@@ -40,7 +62,16 @@ function returnFnResult(fn) {
  Функция должна принимать число (значение по умолчанию - 0) и возвращать функцию (F)
  При вызове F, переданное число должно быть увеличено на единицу и возвращено из F
  */
-function returnCounter(number) {
+function returnCounter(counter) {
+    'use strict';
+
+    counter = counter || 0;
+
+    return function (resetCounter) {
+        counter = resetCounter || counter;
+
+        return counter += 1;
+    }
 }
 
 /*
@@ -50,6 +81,17 @@ function returnCounter(number) {
  Функция должна привязать переданные аргументы к функции F и вернуть получившуюся функцию
  */
 function bindFunction(fn) {
+    'use strict';
+
+    // let args = [],
+    //     l = arguments.length;
+    //
+    // for (let i = 1; i < l; i++) {
+    //     args.push(arguments[i]);
+    // }
+    // return fn.bind(null, ...arg);
+
+    return fn.bind( ...arguments);
 }
 
 export {
