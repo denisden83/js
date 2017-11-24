@@ -1,3 +1,5 @@
+'use strict';
+
 /* ДЗ 1 - Функции */
 
 /*
@@ -6,7 +8,6 @@
  Функция должна принимать один аргумент и возвращать его
  */
 function returnFirstArgument(arg) {
-    'use strict';
 
     return arg;
 }
@@ -17,10 +18,9 @@ function returnFirstArgument(arg) {
  Функция должна принимать два аргумента и возвращать сумму переданных значений
  Значение по умолчанию второго аргумента должно быть 100
  */
-function defaultParameterValue(a, b) {
-    'use strict';
+function defaultParameterValue(a, b = 100) {
 
-    b = b || 100;
+    // b = b || 100;
 
     return a + b;
 }
@@ -32,17 +32,16 @@ function defaultParameterValue(a, b) {
  Количество переданных аргументов заранее неизвестно
  */
 function returnArgumentsArray() {
-    'use strict';
 
-    let arr = [],
-        l = arguments.length;
+    // let arr = [],
+    //     l = arguments.length;
+    //
+    // for (let i = 0; i < l; i++) {
+    //     // arr[i] = arguments[i];
+    //     arr.push(arguments[i]);
+    // }
 
-    for (let i = 0; i < l; i++) {
-        // arr[i] = arguments[i];
-        arr.push(arguments[i]);
-    }
-
-    return arr;
+    return [...arguments];
 }
 
 /*
@@ -51,7 +50,6 @@ function returnArgumentsArray() {
  Функция должна принимать другую функцию и возвращать результат вызова переданной функции
  */
 function returnFnResult(fn) {
-    'use strict';
 
     return fn();
 }
@@ -62,10 +60,9 @@ function returnFnResult(fn) {
  Функция должна принимать число (значение по умолчанию - 0) и возвращать функцию (F)
  При вызове F, переданное число должно быть увеличено на единицу и возвращено из F
  */
-function returnCounter(counter) {
-    'use strict';
+function returnCounter(counter = 0) {
 
-    counter = counter || 0;
+    // counter = counter || 0;
 
     return function (resetCounter) {
         counter = resetCounter || counter;
