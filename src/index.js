@@ -10,6 +10,21 @@
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isAllTrue(array, fn) {
+    let result;
+
+    for (let i = 0; i < array.length; i++) {
+        if (fn(array[i]) === false) {
+            result = false;
+            break;
+        } else {
+            result = true;
+        }
+    }
+
+    return result;
+
+    if (typeof fn != 'function') throw new Error('fn is not a function');
+    if (array instanceof Array || array.length < 1) throw new Error('empty array');
 }
 
 /*
@@ -22,6 +37,21 @@ function isAllTrue(array, fn) {
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isSomeTrue(array, fn) {
+    let result;
+
+    for (let i = 0; i < array.length; i++) {
+        if (fn(array[i]) === true) {
+            result = true;
+            break;
+        } else {
+            result = false;
+        }
+    }
+
+    return result;
+
+    // if (typeof fn != 'function') throw new Error('fn is not a function');
+    // if (array instanceof Array || array.length < 1) throw new Error('empty array');
 }
 
 /*
