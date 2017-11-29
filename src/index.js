@@ -1,3 +1,5 @@
+'use strict';
+
 /* ДЗ 3 - работа с массивами и объеектами */
 
 /*
@@ -5,13 +7,24 @@
  Напишите аналог встроенного метода forEach для работы с массивами
  */
 function forEach(array, fn) {
+    for (let i = 0; i < array.length; i++) {
+        fn(array[i], i, array);
+    }
 }
 
 /*
  Задача 2:
  Напишите аналог встроенного метода map для работы с массивами
  */
+
 function map(array, fn) {
+    let newArr = [];
+
+    for (let i = 0; i < array.length; i++) {
+        newArr[i] = fn(array[i], i, array);
+    }
+
+    return newArr;
 }
 
 /*
@@ -19,6 +32,25 @@ function map(array, fn) {
  Напишите аналог встроенного метода reduce для работы с массивами
  */
 function reduce(array, fn, initial) {
+    let previousValue;
+
+    if (initial !== undefined) {
+
+        for (let i = 0; i < array.lenght; i++) {
+            previousValue = previousValue || initial;
+            previousValue = fn(previousValue, array[i], i, array);
+        }
+
+    } else {
+
+        for (let i = 1; i < array.lenght; i++) {
+            previousValue = previousValue || array[0];
+            previousValue = fn(previousValue, array[i], i, array)
+        }
+
+    }
+
+    return previousValue;
 }
 
 /*
@@ -27,6 +59,7 @@ function reduce(array, fn, initial) {
  Функция должна удалить указанное свойство из указанного объекта
  */
 function deleteProperty(obj, prop) {
+    delete obj[prop];
 }
 
 /*
@@ -35,6 +68,8 @@ function deleteProperty(obj, prop) {
  Функция должна проверить существует ли укзаанное свойство в указанном объекте
  */
 function hasProperty(obj, prop) {
+    // return obj.hasOwnProperty(prop);
+    return prop in obj;
 }
 
 /*
@@ -42,6 +77,16 @@ function hasProperty(obj, prop) {
  Функция должна получить все перечисляемые свойства объекта и вернуть их в виде массива
  */
 function getEnumProps(obj) {
+    let newArr = [];
+
+    for (let key in obj) {
+        // if (!obj.hasOwnProperty(key)) {
+        //     continue;
+        // }
+        newArr.push(key);
+    }
+
+    return newArr;
 }
 
 /*
@@ -49,13 +94,33 @@ function getEnumProps(obj) {
  Функция должна перебрать все свойства объекта, преобразовать их имена в верхний регистра и вернуть в виде массива
  */
 function upperProps(obj) {
+    let newArr = [];
+
+    for (let key in obj) {
+        // if (!obj.hasOwnProperty(key)) {
+        //     continue;
+        // }
+        newArr.push(key.toUpperCase());
+    }
+
+    return newArr;
 }
 
 /*
  Задача 8 *:
  Напишите аналог встроенного метода slice для работы с массивами
  */
-function slice(array, from, to) {
+function slice(array, from = 0, to = array.length) {
+    let newArr = [];
+
+    from = from < 0 ? from + array.length : from;
+    from = from < 0 ? 0 : from;
+    to = to > array.length ? array.length : to;
+    for (let i = from; i < to; i++) {
+        newArr.push(array[i]);
+    }
+
+    return newArr;
 }
 
 /*
