@@ -1,5 +1,7 @@
 /* ДЗ 2 - работа с исключениями и отладчиком */
 
+'use strict';
+
 /*
  Задача 1:
  Функция принимает массив и фильтрующую фукнцию и должна вернуть true или false
@@ -10,6 +12,8 @@
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isAllTrue(array, fn) {
+    if (!(array instanceof Array && array.length > 0)) throw new Error('empty array');
+    if (typeof fn != 'function') throw new Error('fn is not a function');
     let result;
 
     for (let i = 0; i < array.length; i++) {
@@ -22,9 +26,6 @@ function isAllTrue(array, fn) {
     }
 
     return result;
-
-    if (typeof fn != 'function') throw new Error('fn is not a function');
-    if (array instanceof Array || array.length < 1) throw new Error('empty array');
 }
 
 /*
@@ -37,6 +38,8 @@ function isAllTrue(array, fn) {
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isSomeTrue(array, fn) {
+    if (!(array instanceof Array && array.length > 0)) throw new Error('empty array');
+    if (typeof fn != 'function') throw new Error('fn is not a function');
     let result;
 
     for (let i = 0; i < array.length; i++) {
@@ -49,9 +52,6 @@ function isSomeTrue(array, fn) {
     }
 
     return result;
-
-    // if (typeof fn != 'function') throw new Error('fn is not a function');
-    // if (array instanceof Array || array.length < 1) throw new Error('empty array');
 }
 
 /*
