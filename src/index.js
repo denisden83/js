@@ -36,15 +36,15 @@ function reduce(array, fn, initial) {
 
     if (initial !== undefined) {
 
-        for (let i = 0; i < array.lenght; i++) {
-            previousValue = previousValue || initial;
+        previousValue = initial;
+        for (let i = 0; i < array.length; i++) {
             previousValue = fn(previousValue, array[i], i, array);
         }
 
     } else {
 
-        for (let i = 1; i < array.lenght; i++) {
-            previousValue = previousValue || array[0];
+        previousValue = array[0];
+        for (let i = 1; i < array.length; i++) {
             previousValue = fn(previousValue, array[i], i, array)
         }
 
