@@ -116,6 +116,7 @@ function slice(array, from = 0, to = array.length) {
     from = from < 0 ? from + array.length : from;
     from = from < 0 ? 0 : from;
     to = to > array.length ? array.length : to;
+    to = to < 0 ? to + array.length : to;
     for (let i = from; i < to; i++) {
         newArr.push(array[i]);
     }
