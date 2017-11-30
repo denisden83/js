@@ -97,7 +97,7 @@ function calculator(number = 0) {
     if (isNaN(number)) throw new Error('number is not a number');
 
     return {
-        sum: function(...arg) {
+        sum(...arg) {
             let result = number;
 
             for (let i = 0; i < arg.length; i++) {
@@ -115,7 +115,7 @@ function calculator(number = 0) {
 
             return result;
         },
-        div: function(...arg) {
+        div(...arg) {
             let result = number;
 
             for (let i = 0; i < arg.length; i++) {
