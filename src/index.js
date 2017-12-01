@@ -21,7 +21,8 @@ function map(array, fn) {
     let newArr = [];
 
     for (let i = 0; i < array.length; i++) {
-        newArr[i] = fn(array[i], i, array);
+        newArr.push(fn(array[i], i, array));
+        // newArr[i] = fn(array[i], i, array);
     }
 
     return newArr;
@@ -77,16 +78,18 @@ function hasProperty(obj, prop) {
  Функция должна получить все перечисляемые свойства объекта и вернуть их в виде массива
  */
 function getEnumProps(obj) {
-    let newArr = [];
 
-    for (let key in obj) {
-        // if (!obj.hasOwnProperty(key)) {
-        //     continue;
-        // }
-        newArr.push(key);
-    }
-
-    return newArr;
+    return Object.keys(obj);
+    // let newArr = [];
+    //
+    // for (let key in obj) {
+    //     // if (!obj.hasOwnProperty(key)) {
+    //     //     continue;
+    //     // }
+    //     newArr.push(key);
+    // }
+    //
+    // return newArr;
 }
 
 /*
@@ -94,16 +97,18 @@ function getEnumProps(obj) {
  Функция должна перебрать все свойства объекта, преобразовать их имена в верхний регистра и вернуть в виде массива
  */
 function upperProps(obj) {
-    let newArr = [];
 
-    for (let key in obj) {
-        // if (!obj.hasOwnProperty(key)) {
-        //     continue;
-        // }
-        newArr.push(key.toUpperCase());
-    }
-
-    return newArr;
+    return Object.keys(obj).map(key => key.toUpperCase());
+    // let newArr = [];
+    //
+    // for (let key in obj) {
+    //     // if (!obj.hasOwnProperty(key)) {
+    //     //     continue;
+    //     // }
+    //     newArr.push(key.toUpperCase());
+    // }
+    //
+    // return newArr;
 }
 
 /*
