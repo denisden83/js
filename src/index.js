@@ -14,18 +14,27 @@
 function isAllTrue(array, fn) {
     if ((!(array instanceof Array)) || array.length < 1) throw new Error('empty array');
     if (typeof fn != 'function') throw new Error('fn is not a function');
-    let result;
 
     for (let i = 0; i < array.length; i++) {
-        if (fn(array[i]) === false) {
-            result = false;
-            break;
-        } else {
-            result = true;
+        if (!fn(array[i])) {
+            return false;
         }
     }
 
-    return result;
+    return true;
+    // let result;
+    //
+    // for (let i = 0; i < array.length; i++) {
+    //     if (fn(array[i]) === false) {
+    //     if (fn(array[i]) === false) {
+    //         result = false;
+    //         break;
+    //     } else {
+    //         result = true;
+    //     }
+    // }
+    //
+    // return result;
 }
 
 /*
@@ -40,18 +49,27 @@ function isAllTrue(array, fn) {
 function isSomeTrue(array, fn) {
     if (!(array instanceof Array && array.length > 0)) throw new Error('empty array');
     if (typeof fn != 'function') throw new Error('fn is not a function');
-    let result;
 
     for (let i = 0; i < array.length; i++) {
-        if (fn(array[i]) === true) {
-            result = true;
-            break;
-        } else {
-            result = false;
+        if (fn(array[i])) {
+            return true;
         }
     }
 
-    return result;
+    return false;
+
+    // let result;
+    //
+    // for (let i = 0; i < array.length; i++) {
+    //     if (fn(array[i]) === true) {
+    //         result = true;
+    //         break;
+    //     } else {
+    //         result = false;
+    //     }
+    // }
+    //
+    // return result;
 }
 
 /*
@@ -94,7 +112,7 @@ function returnBadArguments(...arr) {
  - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
 function calculator(number = 0) {
-    if (isNaN(number)) throw new Error('number is not a number');
+    if (!Number.isInteger(number)) throw new Error('number is not a number');
 
     return {
         sum(...arg) {
