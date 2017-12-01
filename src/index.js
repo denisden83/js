@@ -112,7 +112,9 @@ function returnBadArguments(...arr) {
  - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
 function calculator(number = 0) {
-    if (!Number.isInteger(number)) throw new Error('number is not a number');
+
+    if (!isFinite(number)) throw new Error('number is not a number');
+    // if (!Number.isInteger(number)) throw new Error('number is not a number');
 
     return {
         sum(...arg) {
