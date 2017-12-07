@@ -160,7 +160,7 @@ function deleteTextNodes(where) {
 function deleteTextNodesRecursive(where) {
     let nodes = where.childNodes;
 
-    for (let i = 0; i < nodes.length; i++) {
+    for (let i = nodes.length - 1; i >= 0; i--) {
         let node = nodes[i];
 
         if (node.nodeType === 1) {
@@ -168,9 +168,20 @@ function deleteTextNodesRecursive(where) {
         } else if (node.nodeType === 3) {
             // where.removeChild(node);
             node.parentNode.removeChild(node);
-            i--;
         }
     }
+
+    // for (let i = 0; i < nodes.length; i++) {
+    //     let node = nodes[i];
+    //
+    //     if (node.nodeType === 1) {
+    //         deleteTextNodesRecursive(node);
+    //     } else if (node.nodeType === 3) {
+    //         // where.removeChild(node);
+    //         node.parentNode.removeChild(node);
+    //         i--;
+    //     }
+    // }
 }
 
 /**
@@ -195,7 +206,27 @@ function deleteTextNodesRecursive(where) {
  *   texts: 3
  * }
  */
-function collectDOMStat(root) {
+function collectDOMStat(root, forwardedObj) {
+    let obj = forwardedObj || {
+        tags: {},
+        classes: {},
+        texts: 0
+    };
+    let nodes = root.childNodes;
+
+    for (let node of nodes) {
+        if (node.nodeType === 3) {
+            obj.texts += 1;
+        } else if (node.nodeType === 1) {
+            if (node.childNodes.length) obj = collectDOMStat(node, obj);
+            obj.tags[node.tagName] = node.tagName in obj.tags ? ++obj.tags[node.tagName] : 1;
+            [...node.classList].forEach(i => {
+                obj.classes[i] = i in obj.classes ? ++obj.classes[i] : 1;
+            });
+        }
+    }
+
+    return obj;
 }
 
 /**
