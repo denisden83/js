@@ -1,5 +1,7 @@
 /* ДЗ 5 - DOM Events */
 
+'use strict';
+
 /**
  * Функция должна добавлять обработчик fn события eventName к элементу target
  *
@@ -8,6 +10,7 @@
  * @param {function} fn - обработчик
  */
 function addListener(eventName, target, fn) {
+    target.addEventListener(eventName, fn);
 }
 
 /**
@@ -18,6 +21,7 @@ function addListener(eventName, target, fn) {
  * @param {function} fn - обработчик
  */
 function removeListener(eventName, target, fn) {
+    target.removeEventListener(eventName, fn);
 }
 
 /**
@@ -27,6 +31,7 @@ function removeListener(eventName, target, fn) {
  * @param {Element} target - элемент, на который нужно добавить обработчик
  */
 function skipDefault(eventName, target) {
+    target.addEventListener(eventName, e => e.preventDefault());
 }
 
 /**
@@ -35,6 +40,7 @@ function skipDefault(eventName, target) {
  * @param {Element} target - элемент, на который нужно добавить обработчик
  */
 function emulateClick(target) {
+    target.dispatchEvent(new CustomEvent('click'));
 }
 
 /**
@@ -45,6 +51,11 @@ function emulateClick(target) {
  * @param {function} fn - функция, которую нужно вызвать при клике на элемент BUTTON внутри target
  */
 function delegate(target, fn) {
+    target.addEventListener('click', function(e) {
+        if (e.target.tagName === 'BUTTON') {
+            fn();
+        }
+    });
 }
 
 /**
@@ -57,6 +68,12 @@ function delegate(target, fn) {
  * @param {function} fn - обработчик
  */
 function once(target, fn) {
+    function myHandler() {
+        fn();
+        target.removeEventListener('click', myHandler);
+    }
+
+    target.addEventListener('click', myHandler);
 }
 
 export {
