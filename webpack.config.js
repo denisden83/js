@@ -7,10 +7,14 @@ let path = require('path');
 
 loaders.push({
     test: /\.css$/,
-    loader: ExtractTextPlugin.extract({
-        fallbackLoader: 'style-loader',
-        loader: 'css-loader'
+    use: ExtractTextPlugin.extract({ // correct
+        fallback: 'style-loader', // correct
+        use: 'css-loader' // correct
     })
+    // loader: ExtractTextPlugin.extract({
+    //     fallbackLoader: 'style-loader',
+    //     loader: 'css-loader'
+    // })
 });
 
 module.exports = {
@@ -19,7 +23,8 @@ module.exports = {
         dnd: './src/dnd.js'
     },
     output: {
-        filename: '[hash].js',
+        filename: '[name].[hash].js', // correct
+        // filename: '[hash].js',
         path: path.resolve('dist')
     },
     devtool: 'source-map',
@@ -27,12 +32,12 @@ module.exports = {
         loaders
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            compress: {
-                drop_debugger: false
-            }
-        }),
+        // new webpack.optimize.UglifyJsPlugin({ // correct only deleted, commented
+        //     sourceMap: true,
+        //     compress: {
+        //         drop_debugger: false
+        //     }
+        // }),
         new ExtractTextPlugin('styles.css'),
         new HtmlPlugin({
             title: 'Main Homework',
