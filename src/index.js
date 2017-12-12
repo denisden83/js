@@ -57,6 +57,7 @@ function loadAndSortTowns() {
             // let finalArr = [];
 
             let finalArr = arr3.map(elem => ({ name: elem }));
+
             // arr3.forEach(elem => finalArr.push({ name: elem }));
 
             // for (let elem of arr3) {
