@@ -35,15 +35,18 @@ function loadAndSortTowns() {
         xhr.open('GET', url);
         xhr.send();
         xhr.addEventListener('load', () => {
-            let gotArr = JSON.parse(xhr.responseText);
+            resolve(JSON.parse(xhr.responseText).sort((a, b) => {
+                if (a.name > b.name) return 1;
+                if (a.name < b.name) return -1;
 
-            // ===============  ??????? почему так не сортирует ??????
-            // gotArr.sort((a, b) => a.name > b.name);
-            // ===============  ??????? почему так не сортирует ??????
+                return 0;
+            }));
+
+            // let gotArr = JSON.parse(xhr.responseText);
 
             // let arr2 = [];
 
-            let arr2 = gotArr.map(obj => obj.name);
+            // let arr2 = gotArr.map(obj => obj.name);
             // gotArr.forEach(obj => arr2.push(obj.name));
 
             // for (let obj of gotArr) {
@@ -53,10 +56,10 @@ function loadAndSortTowns() {
             // for (let i = 0; i < gotArr.length; i++) {
             //     arr2.push(gotArr[i].name);
             // }
-            let arr3 = arr2.sort();
+            // let arr3 = arr2.sort();
             // let finalArr = [];
 
-            let finalArr = arr3.map(elem => ({ name: elem }));
+            // let finalArr = arr3.map(elem => ({ name: elem }));
 
             // arr3.forEach(elem => finalArr.push({ name: elem }));
 
@@ -68,7 +71,7 @@ function loadAndSortTowns() {
             //     finalArr.push({ name: arr3[k] });
             // }
 
-            resolve(finalArr);
+            // resolve(finalArr);
         });
     });
 }
