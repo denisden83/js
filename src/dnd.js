@@ -1,3 +1,6 @@
+
+'use strict';
+
 /** Со звездочкой */
 /**
  * Создать страницу с кнопкой
@@ -23,6 +26,27 @@ let homeworkContainer = document.querySelector('#homework-container');
  * @return {Element}
  */
 function createDiv() {
+    let div = document.createElement('div'),
+        w = Math.floor(window.innerWidth * Math.random()) + 1,
+        h = Math.floor(window.innerHeight * Math.random()) + 1,
+        l = Math.floor(window.innerWidth * Math.random()) + 1,
+        t = Math.floor(window.innerHeight * Math.random()) + 1,
+        color = `#${genColor()}${genColor()}${genColor()}`;
+
+    function genColor() {
+        return Math.ceil(Math.random() * 255).toString(16);
+    }
+
+    div.classList.add('draggable-div');
+    div.style.position = 'absolute';
+    div.style.width = w / 2 + 'px';
+    div.style.height = h / 2 + 'px';
+    div.style.left = l / 2 + 'px';
+    div.style.top = t / 2 + 'px';
+    div.style['background-color'] = color;
+    // div.style.backgroundColor = color;
+
+    return div;
 }
 
 /**
@@ -30,7 +54,31 @@ function createDiv() {
  *
  * @param {Element} target
  */
+
+
 function addListeners(target) {
+    let isMovable = false;
+
+    target.addEventListener('mousedown', (e) => {
+        let listDiv = document.querySelectorAll('.draggable-div');
+
+        isMovable = true;
+        listDiv.forEach(div => {
+            div.style.zIndex = 'auto';
+        });
+        e.target.style.opacity = '0.5';
+        e.target.style.zIndex = '1';
+    });
+    target.addEventListener('mouseup', (e) => {
+        isMovable = false;
+        e.target.style.opacity = '1';
+    });
+    document.addEventListener('mousemove', (e) => {
+        if (isMovable) {
+            target.style.left = e.pageX - e.currentTarget.offsetWidth / 2 + 'px';
+            target.style.top = e.pageY - e.currentTarget.offsetHeight / 2 + 'px';
+        }
+    })
 }
 
 let addDivButton = homeworkContainer.querySelector('#addDiv');
