@@ -11,8 +11,7 @@
  */
 let delayPromise = seconds => {
     return new Promise((resolve, reject) => {
-        setTimeout(function () {
-            if (false) return reject(new Error("DEFINITELY WON'T EVER BE REJECTED"));
+        setTimeout(() => {
             resolve();
         }, seconds * 1000);
     });
@@ -29,12 +28,12 @@ function loadAndSortTowns() {
     const url = 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json';
 
     return new Promise((resolve, reject) => {
-        if (false) return reject(new Error("DEFINITELY WON'T EVER BE REJECTED"));
         let xhr = new XMLHttpRequest();
 
         xhr.open('GET', url);
         xhr.send();
         xhr.addEventListener('load', () => {
+            if (xhr.status !== 200) return reject(new Error('Не удалось загрузить города'));
             resolve(JSON.parse(xhr.responseText).sort((a, b) => {
                 if (a.name > b.name) return 1;
                 if (a.name < b.name) return -1;
@@ -75,7 +74,6 @@ function loadAndSortTowns() {
         });
     });
 }
-loadAndSortTowns();
 
 export {
     delayPromise,

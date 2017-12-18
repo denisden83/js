@@ -1,3 +1,8 @@
+
+'use strict';
+
+// import { loadAndSortTowns } from './index.js';
+
 /**
  * ДЗ 6.2 - Создать страницу с текстовым полем для фильтрации городов
  *
@@ -36,6 +41,25 @@ let homeworkContainer = document.querySelector('#homework-container');
  * @return {Promise<Array<{name: string}>>}
  */
 function loadTowns() {
+    // return loadAndSortTowns();
+    // return require('./index.js').loadAndSortTowns();
+    const url = 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json';
+
+    return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url);
+        xhr.send();
+        xhr.addEventListener('load', () => {
+            if (xhr.status !== 200) return reject(new Error('Не удалось загрузить города'));
+            resolve(JSON.parse(xhr.responseText).sort((a, b) => {
+                if (a.name > b.name) return 1;
+                if (a.name < b.name) return -1;
+
+                return 0;
+            }));
+        });
+    });
 }
 
 /**
@@ -52,22 +76,43 @@ function loadTowns() {
  * @return {boolean}
  */
 function isMatching(full, chunk) {
+    return full.toLowerCase().includes(chunk.toLowerCase());
 }
 
 let loadingBlock = homeworkContainer.querySelector('#loading-block');
 let filterBlock = homeworkContainer.querySelector('#filter-block');
 let filterInput = homeworkContainer.querySelector('#filter-input');
 let filterResult = homeworkContainer.querySelector('#filter-result');
-let townsPromise;
+let errorBlock = homeworkContainer.querySelector('#error-block');
+let errorP = homeworkContainer.querySelector('#error-p');
+let errorButton = homeworkContainer.querySelector('#error-button');
+// let townsPromise = loadTowns();
 
-filterInput.addEventListener('keyup', function() {
-});
+loadTowns()
+    .then(towns => {
+        loadingBlock.style.display = 'none';
+        filterBlock.style.display = 'block';
+        filterInput.addEventListener('keyup', () =>{
+            let value = this.value.trim();
 
-// function promiseThen() {
-//
-// }
-// promiseThen();
-// loadTowns();
+            filterResult.innerHTML = '';
+            if (value !== '') {
+                towns.forEach(town => {
+                    if (isMatching(town.name, value)) {
+                        filterResult.innerHTML += `<li>${town.name}</li>`;
+                    }
+                });
+            }
+        });
+    })
+    .catch(err => {
+        loadingBlock.style.display = 'none';
+        errorBlock.style.display = 'block';
+        errorP.textContent = err.message;
+        errorButton.addEventListener('click', () => {
+            location.reload();
+        })
+    });
 
 export {
     loadTowns,
