@@ -50,6 +50,7 @@ function loadTowns() {
 
         xhr.open('GET', url);
         xhr.send();
+
         xhr.addEventListener('load', () => {
             if (xhr.status !== 200) return reject(new Error('Не удалось загрузить города'));
             resolve(JSON.parse(xhr.responseText).sort((a, b) => {
@@ -92,19 +93,23 @@ loadTowns()
     .then(towns => {
         loadingBlock.style.display = 'none';
         filterBlock.style.display = 'block';
-        filterInput.addEventListener('keyup', () =>{
-            let value = this.value.trim();
+        filterInput.autofocus = true;
+        filterInput.addEventListener('keyup', (e) =>{
+            let value = e.currentTarget.value.trim();
 
             filterResult.innerHTML = '';
             if (value !== '') {
-                let content;
+                // let content = '';
 
                 towns.forEach(town => {
                     if (isMatching(town.name, value)) {
-                        content += `<li>${town.name}</li>`;
+                        // content += `<li>${town.name}</li>`;
+                        filterResult.innerHTML += `<li>${town.name}</li>`;
                     }
                 });
-                filterResult.innerHTML = content;
+                // filterResult.innerHTML = content;
+                // console.log(content);
+                // console.log(filterResult);
             }
         });
     })

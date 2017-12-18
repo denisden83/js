@@ -32,8 +32,8 @@ function loadAndSortTowns() {
 
         xhr.open('GET', url);
         xhr.send();
+        if (xhr.status !== 200) return reject(new Error('Не удалось загрузить города'));
         xhr.addEventListener('load', () => {
-            if (xhr.status !== 200) return reject(new Error('Не удалось загрузить города'));
             resolve(JSON.parse(xhr.responseText).sort((a, b) => {
                 if (a.name > b.name) return 1;
                 if (a.name < b.name) return -1;
