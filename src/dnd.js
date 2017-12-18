@@ -75,8 +75,8 @@ function addListeners(target) {
     });
     document.addEventListener('mousemove', (e) => {
         if (isMovable) {
-            target.style.left = e.pageX - e.currentTarget.offsetWidth / 2 + 'px';
-            target.style.top = e.pageY - e.currentTarget.offsetHeight / 2 + 'px';
+            target.style.left = e.pageX - e.target.offsetWidth / 2 + 'px';
+            target.style.top = e.pageY - e.target.offsetHeight / 2 + 'px';
         }
     })
 }
