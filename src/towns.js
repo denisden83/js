@@ -97,11 +97,14 @@ loadTowns()
 
             filterResult.innerHTML = '';
             if (value !== '') {
+                let content;
+
                 towns.forEach(town => {
                     if (isMatching(town.name, value)) {
-                        filterResult.innerHTML += `<li>${town.name}</li>`;
+                        content += `<li>${town.name}</li>`;
                     }
                 });
+                filterResult.innerHTML = content;
             }
         });
     })
