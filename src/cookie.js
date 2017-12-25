@@ -116,7 +116,8 @@ addButton.addEventListener('click', () => {
 
     createCookie(name, value);
     filterNameInput.dispatchEvent(new Event('keyup'));
-
+    addNameInput.value = '';
+    addValueInput.value = '';
 });
 
 loadAllCookies();
