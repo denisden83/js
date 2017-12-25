@@ -44,7 +44,7 @@ module.exports = {
             chunks: ['main']
         }),
         new HtmlPlugin({
-            title: 'Div Drag And Drop',
+            title: 'Cookie Filter',
             template: 'cookie.hbs',
             filename: 'cookie.html',
             chunks: ['cookie']

@@ -1,3 +1,12 @@
+'use strict';
+
+import {
+    createWindow,
+    closeWindow,
+    createCookie,
+    deleteCookie
+} from './index';
+
 /**
  * ДЗ 7.2 - Создать редактор cookie с возможностью фильтрации
  *
@@ -39,8 +48,75 @@ let addValueInput = homeworkContainer.querySelector('#add-value-input');
 let addButton = homeworkContainer.querySelector('#add-button');
 let listTable = homeworkContainer.querySelector('#list-table tbody');
 
+function isMatching(full, chunk) {
+    return full.toLowerCase().includes(chunk.toLowerCase());
+}
+
+function getCookies() {
+    return document.cookie
+        .split('; ')
+        .filter(Boolean)
+        .reduce((prev, current) => {
+            let [name, value] = current.split('=');
+
+            prev[name] = value;
+
+            return prev;
+        }, {});
+}
+
+function newRow(name, value) {
+    let row = document.createElement('tr'),
+        colName = document.createElement('td'),
+        colValue = document.createElement('td'),
+        colBtn = document.createElement('td'),
+        button = document.createElement('button');
+
+    colName.textContent = name;
+    colValue.textContent = value;
+    button.textContent = 'X';
+    row.appendChild(colName);
+    row.appendChild(colValue);
+    row.appendChild(colBtn);
+    colBtn.appendChild(button);
+    button.addEventListener('click', () => {
+        row.remove();
+        deleteCookie(name);
+    });
+    listTable.appendChild(row);
+}
+
+function loadAllCookies() {
+    let cookies = getCookies();
+
+    listTable.innerHTML = '';
+    Object.keys(cookies).forEach(name => newRow(name, cookies[name]));
+}
+
 filterNameInput.addEventListener('keyup', function() {
+    let value = filterNameInput.value;
+
+    listTable.innerHTML = '';
+    if (value === '') {
+        loadAllCookies();
+    } else {
+        let cookies = getCookies();
+
+        Object.keys(cookies).forEach(name => {
+            if (isMatching(name, value) || isMatching(cookies[name], value)) {
+                newRow(name, cookies[name]);
+            }
+        });
+    }
 });
 
 addButton.addEventListener('click', () => {
+    let name = addNameInput.value,
+        value = addValueInput.value;
+
+    createCookie(name, value);
+    filterNameInput.dispatchEvent(new Event('keyup'));
+
 });
+
+loadAllCookies();
