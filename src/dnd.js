@@ -54,13 +54,23 @@ function createDiv() {
  *
  * @param {Element} target
  */
+function getCoords(elem) {
+    let box = elem.getBoundingClientRect();
 
+    return {
+        top: box.top + pageYOffset,
+        left: box.left + pageXOffset
+    };
+}
 
 function addListeners(target) {
     let isMovable = false;
 
     target.addEventListener('mousedown', (e) => {
         let listDiv = document.querySelectorAll('.draggable-div');
+        let coords = getCoords(target);
+        let shiftX = e.pageX - coords.left;
+        let shiftY = e.pageY - coords.top;
 
         isMovable = true;
         listDiv.forEach(div => {
@@ -68,17 +78,29 @@ function addListeners(target) {
         });
         e.target.style.opacity = '0.5';
         e.target.style.zIndex = '1';
+        // move(e);
+        document.addEventListener('mousemove', (e) => {
+            if (isMovable) {
+                target.style.left = e.pageX - shiftX + 'px';
+                target.style.top = e.pageY - shiftY + 'px';
+                // target.style.left = e.pageX - e.target.offsetWidth / 2 + 'px';
+                // target.style.top = e.pageY - e.target.offsetHeight / 2 + 'px';
+            }
+        });
+        // function move(e) {
+        //     if (isMovable) {
+        //         target.style.left = e.pageX - shiftX + 'px';
+        //         target.style.top = e.pageY - shiftY + 'px';
+        //         // target.style.left = e.pageX - e.target.offsetWidth / 2 + 'px';
+        //         // target.style.top = e.pageY - e.target.offsetHeight / 2 + 'px';
+        //     }
+        // }
     });
     target.addEventListener('mouseup', (e) => {
         isMovable = false;
         e.target.style.opacity = '1';
     });
-    document.addEventListener('mousemove', (e) => {
-        if (isMovable) {
-            target.style.left = e.pageX - e.target.offsetWidth / 2 + 'px';
-            target.style.top = e.pageY - e.target.offsetHeight / 2 + 'px';
-        }
-    })
+
 }
 
 let addDivButton = homeworkContainer.querySelector('#addDiv');
